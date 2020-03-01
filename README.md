@@ -1,4 +1,4 @@
-# FFMpegBot
+# TerminalBot
 
 A Telegram Bot based on [Pyrogram](https://github.com/pyrogram/pyrogram)
 
@@ -12,13 +12,13 @@ A Telegram Bot based on [Pyrogram](https://github.com/pyrogram/pyrogram)
 Simply clone the repository and run the main file:
 
 ```sh
-git clone https://github.com/SpEcHiDe/FFMpegBot.git
-cd FFMpegBot
+git clone https://github.com/SpEcHiDe/TerminalBot.git
+cd TerminalBot
 virtualenv -p /usr/bin/python3 venv
 . ./venv/bin/activate
 pip install -r requirements.txt
 # <Create config.py with variables as given below>
-python3 -m ffmpegbot
+python3 -m termbot
 ```
 
 
@@ -31,7 +31,7 @@ An example `config.py` file could be:
 __The Bot should work by setting only these variables__
 
 ```python3
-from ffmpegbot.sample_config import Config
+from termbot.sample_config import Config
 
 class Development(Config):
   APP_ID = 6
