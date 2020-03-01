@@ -1,0 +1,68 @@
+{
+  "name": "FFMpegBot",
+  "description": "A FFMpeg Wrapper inside @Telegram",
+  "keywords": [
+    "telegram",
+    "best",
+    "indian",
+    "ffmpeg",
+    "bot",
+    "3",
+    "plugin",
+    "modular",
+    "productivity"
+  ],
+  "repository": "https://github.com/SpEcHiDe/FFMpegBot",
+  "success_url": "https://telegram.dog/SpEcHlDe",
+  "website": "https://github.com/SpEcHiDe/FFMpegBot",
+  "env": {
+    "ENV": {
+      "description": "Setting this to ANYTHING will enable env mode",
+      "value": "ANYTHING"
+    },
+    "APP_ID": {
+      "description": "Get this value from https://my.telegram.org",
+      "value": ""
+    },
+    "API_HASH": {
+      "description": "Get this value from https://my.telegram.org",
+      "value": ""
+    },
+    "TG_BOT_TOKEN": {
+      "description": "You can create a bot using @BotFather",
+      "value": ""
+    },
+    "AUTH_USERS": {
+      "description": "You can create a bot using @BotFather",
+      "value": "7351948 -1001220993104"
+    },
+    "TG_UPDATE_WORKERS_COUNT": {
+      "description": "Number of workers to use. `1` is the recommended amount see for yourself what works best!",
+      "required": false
+    },
+    "TMP_DOWNLOAD_DIRECTORY": {
+      "description": "This is required for the plugins involving the file system.",
+      "required": false
+    },
+    "EVAL_CMD_TRIGGER": {
+      "description": "EVAL command trigger",
+      "required": false
+    },
+    "EXEC_CMD_TRIGGER": {
+      "description": "EXEC command trigger",
+      "required": false
+    }
+  },
+  "addons": [],
+  "buildpacks": [{
+    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+  }, {
+    "url": "heroku/python"
+  }],
+  "formation": {
+    "worker": {
+      "quantity": 1,
+      "size": "free"
+    }
+  }
+}
