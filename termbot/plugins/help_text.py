@@ -1,6 +1,6 @@
 from pyrogram import Client, Filters
 
-from ffmpegbot import (
+from termbot import (
     HELP_STICKER,
     TMP_DOWNLOAD_DIRECTORY
 )

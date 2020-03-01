@@ -11,7 +11,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-from ffmpegbot import (
+from termbot import (
     APP_ID,
     API_HASH,
     TG_BOT_TOKEN,
@@ -24,10 +24,10 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 if __name__ == "__main__":
     plugins = dict(
-        root="ffmpegbot/plugins"
+        root="termbot/plugins"
     )
     app = pyrogram.Client(
-        "FFMpegRoBot",
+        "TermBot",
         api_id=APP_ID,
         api_hash=API_HASH,
         plugins=plugins,

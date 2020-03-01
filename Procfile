@@ -1,1 +1,1 @@
-worker: python3 -m ffmpegbot
+worker: python3 -m termbot

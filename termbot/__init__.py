@@ -15,9 +15,9 @@ import os
 
 # the secret configuration specific things
 if bool(os.environ.get("ENV", False)):
-    from ffmpegbot.sample_config import Config
+    from termbot.sample_config import Config
 else:
-    from ffmpegbot.config import Development as Config
+    from termbot.config import Development as Config
 
 
 # TODO: is there a better way?

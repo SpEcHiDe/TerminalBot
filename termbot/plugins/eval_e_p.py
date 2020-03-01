@@ -3,7 +3,7 @@ from pyrogram import (
     Filters
 )
 
-from ffmpegbot import (
+from termbot import (
     AUTH_USERS,
     EVAL_CMD_TRIGGER,
     MAX_MESSAGE_LENGTH,
