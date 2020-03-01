@@ -24,6 +24,8 @@ class Config(object):
     EVAL_CMD_TRIGGER = os.environ.get("EVAL_CMD_TRIGGER", "eval")
     # EXEC command trigger
     EXEC_CMD_TRIGGER = os.environ.get("EXEC_CMD_TRIGGER", "exec")
+    #
+    DELAY_BETWEEN_EDITS = int(os.environ.get("DELAY_BETWEEN_EDITS", "2"))
 
 
 class Production(Config):
