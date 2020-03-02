@@ -114,7 +114,7 @@ async def kill_cmd_t(client, message):
 
 
 #    Friendly Telegram (telegram userbot)
-#    Copyright (C) 2018-2019 The Authors
+#    Copyright (C) 2018-2019 GitHub/penn5 
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
