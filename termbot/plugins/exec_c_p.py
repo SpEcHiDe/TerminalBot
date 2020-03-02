@@ -19,6 +19,10 @@ from termbot import (
     EXEC_CMD_TRIGGER,
     MAX_MESSAGE_LENGTH,
     PROCESS_RUNNING,
+    SIG_KILL_CMD_TRIGGER,
+    SIG_KILL_HELP_GNIRTS,
+    TERMINATE_CMD_TRIGGER,
+    TERMINATE_HELP_GNIRTS,
     TMP_DOWNLOAD_DIRECTORY
 )
 
@@ -75,6 +79,38 @@ async def execution_cmd_t(client, message):
     )
     await editor.cmd_ended(await process.wait())
     del aktifperintah[hash_msg(message)]
+
+
+@Client.on_message(Filters.command([TERMINATE_CMD_TRIGGER]) & Filters.chat(AUTH_USERS))
+async def terminate_cmd_t(client, message):
+    if message.reply_to_message is None:
+        await message.reply_text(TERMINATE_HELP_GNIRTS, quote=True)
+        return
+    if hash_msg(message.reply_to_message) in aktifperintah:
+        try:
+            aktifperintah[hash_msg(message.reply_to_message)].terminate()
+        except Exception:
+            await message.reply_text("Could not Terminate!", quote=True)
+        else:
+            await message.reply_to_message.edit("Terminated!")
+    else:
+        await message.reply_text("No command is running in that message.", quote=True)
+
+
+@Client.on_message(Filters.command([SIG_KILL_CMD_TRIGGER]) & Filters.chat(AUTH_USERS))
+async def kill_cmd_t(client, message):
+    if message.reply_to_message is None:
+        await message.reply_text(SIG_KILL_HELP_GNIRTS, quote=True)
+        return
+    if hash_msg(message.reply_to_message) in aktifperintah:
+        try:
+            aktifperintah[hash_msg(message.reply_to_message)].kill()
+        except Exception:
+            await message.reply_text("Could not kill!", quote=True)
+        else:
+            await message.reply_to_message.edit("Killed!")
+    else:
+        await message.reply_text("No command is running in that message.", quote=True)
 
 
 def hash_msg(message):
