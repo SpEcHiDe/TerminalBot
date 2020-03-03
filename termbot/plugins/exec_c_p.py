@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# Telegram Terminal Bot
+# CopyLeft AGPLv3 (C) 2020 The Authors
+
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 # the logging things
 import logging
 logging.basicConfig(
@@ -38,7 +46,7 @@ aktifperintah = {}
 inikerjasaatdirektori = os.path.abspath(
     os.path.dirname(
         os.path.abspath(
-            "."
+            os.getcwd()
         )
     )
 )
@@ -114,7 +122,7 @@ async def kill_cmd_t(client, message):
 
 
 #    Friendly Telegram (telegram userbot)
-#    Copyright (C) 2018-2019 GitHub/penn5 
+#    Copyright (C) 2018-2019 GitHub/penn5
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
