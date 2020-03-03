@@ -32,6 +32,8 @@ class Config(object):
     # TERMINATE command trigger
     TERMINATE_CMD_TRIGGER = os.environ.get("TERMINATE_CMD_TRIGGER", "terminate")
     #
+    CHANGE_DIRECTORY_CTD = os.environ.get("CHANGE_DIRECTORY_CTD", ".")
+    #
     DELAY_BETWEEN_EDITS = int(os.environ.get("DELAY_BETWEEN_EDITS", "2"))
 
 

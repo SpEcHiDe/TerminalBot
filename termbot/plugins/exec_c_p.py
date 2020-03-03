@@ -23,6 +23,7 @@ from pyrogram import (
 
 from termbot import (
     AUTH_USERS,
+    CHANGE_DIRECTORY_CTD,
     DELAY_BETWEEN_EDITS,
     EXEC_CMD_TRIGGER,
     MAX_MESSAGE_LENGTH,
@@ -46,7 +47,7 @@ aktifperintah = {}
 inikerjasaatdirektori = os.path.abspath(
     os.path.dirname(
         os.path.abspath(
-            os.getcwd()
+            CHANGE_DIRECTORY_CTD
         )
     )
 )
