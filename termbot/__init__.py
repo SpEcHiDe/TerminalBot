@@ -44,3 +44,10 @@ TERMINATE_HELP_GNIRTS = "reply to a <u>command reply</u> to terminate 😡😳�
 SIG_KILL_HELP_GNIRTS = "reply to a <u>command reply</u> to kill 😡 it"
 TYPE_HELP_GNIRTS = "reply to a <u>command reply</u> to pass additional <s>required</s> input"
 NO_CMD_RUNNING = "No command is running in that message."
+
+# a dictionary to store the currently running commands
+aktifperintah = {}
+# a variable to store the current working directory
+inikerjasaatdirektori = os.path.abspath(
+    CHANGE_DIRECTORY_CTD
+)
