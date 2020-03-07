@@ -27,12 +27,15 @@ from termbot import (
     DELAY_BETWEEN_EDITS,
     EXEC_CMD_TRIGGER,
     MAX_MESSAGE_LENGTH,
+    NO_CMD_RUNNING,
     PROCESS_RUNNING,
     SIG_KILL_CMD_TRIGGER,
     SIG_KILL_HELP_GNIRTS,
     TERMINATE_CMD_TRIGGER,
     TERMINATE_HELP_GNIRTS,
-    TMP_DOWNLOAD_DIRECTORY
+    TMP_DOWNLOAD_DIRECTORY,
+    TYPE_CMD_TRIGGER,
+    TYPE_HELP_GNIRTS
 )
 
 
@@ -45,11 +48,7 @@ import time
 aktifperintah = {}
 # a variable to store the current working directory
 inikerjasaatdirektori = os.path.abspath(
-    os.path.dirname(
-        os.path.abspath(
-            CHANGE_DIRECTORY_CTD
-        )
-    )
+    CHANGE_DIRECTORY_CTD
 )
 logger.info(inikerjasaatdirektori)
 
@@ -72,7 +71,7 @@ async def execution_cmd_t(client, message):
     editor = MessageEditor(status_message, cmd)
     editor.update_process(process)
 
-    aktifperintah[hash_msg(message)] = process
+    aktifperintah[hash_msg(status_message)] = process
     await editor.redraw(True)
     await asyncio.gather(
         read_stream(
@@ -87,7 +86,7 @@ async def execution_cmd_t(client, message):
         )
     )
     await editor.cmd_ended(await process.wait())
-    del aktifperintah[hash_msg(message)]
+    del aktifperintah[hash_msg(status_message)]
 
 
 @Client.on_message(Filters.command([TERMINATE_CMD_TRIGGER]) & Filters.chat(AUTH_USERS))
@@ -103,7 +102,7 @@ async def terminate_cmd_t(client, message):
         else:
             await message.reply_to_message.edit("Terminated!")
     else:
-        await message.reply_text("No command is running in that message.", quote=True)
+        await message.reply_text(NO_CMD_RUNNING, quote=True)
 
 
 @Client.on_message(Filters.command([SIG_KILL_CMD_TRIGGER]) & Filters.chat(AUTH_USERS))
@@ -119,7 +118,21 @@ async def kill_cmd_t(client, message):
         else:
             await message.reply_to_message.edit("Killed!")
     else:
-        await message.reply_text("No command is running in that message.", quote=True)
+        await message.reply_text(NO_CMD_RUNNING, quote=True)
+
+
+@Client.on_message(Filters.command([TYPE_CMD_TRIGGER]) & Filters.chat(AUTH_USERS))
+async def type_cmd_t(client, message):
+    if message.reply_to_message is None:
+        await message.reply_text(TYPE_HELP_GNIRTS, quote=True)
+        return
+    if hash_msg(message.reply_to_message) in aktifperintah:
+        running_proc = aktifperintah[hash_msg(message.reply_to_message)]
+        # get the message from the triggered command
+        additional_input = message.text.split(" ", maxsplit=1)[1]
+        running_proc.stdin.write(additional_input.encode("UTF-8") + b"\n")
+    else:
+        await message.reply_text(NO_CMD_RUNNING, quote=True)
 
 
 #    Friendly Telegram (telegram userbot)

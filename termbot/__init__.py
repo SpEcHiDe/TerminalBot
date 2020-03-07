@@ -36,8 +36,11 @@ TERMINATE_CMD_TRIGGER = Config.TERMINATE_CMD_TRIGGER
 SIG_KILL_CMD_TRIGGER = Config.SIG_KILL_CMD_TRIGGER
 CHANGE_DIRECTORY_CTD = Config.CHANGE_DIRECTORY_CTD
 DELAY_BETWEEN_EDITS = Config.DELAY_BETWEEN_EDITS
+TYPE_CMD_TRIGGER = Config.TYPE_CMD_TRIGGER
 
 HELP_STICKER = "CAADAgAD6AkAAowucAABsFGHedLEzeUWBA"
 PROCESS_RUNNING = "processing ..."
 TERMINATE_HELP_GNIRTS = "reply to a <u>command reply</u> to terminate 😡😳😳 it"
 SIG_KILL_HELP_GNIRTS = "reply to a <u>command reply</u> to kill 😡 it"
+TYPE_HELP_GNIRTS = "reply to a <u>command reply</u> to pass additional <s>required</s> input"
+NO_CMD_RUNNING = "No command is running in that message."
