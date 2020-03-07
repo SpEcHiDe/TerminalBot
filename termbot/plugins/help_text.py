@@ -9,8 +9,7 @@
 from pyrogram import Client, Filters
 
 from termbot import (
-    HELP_STICKER,
-    TMP_DOWNLOAD_DIRECTORY
+    HELP_STICKER
 )
 
 

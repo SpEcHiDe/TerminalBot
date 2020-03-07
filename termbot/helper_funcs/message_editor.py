@@ -24,6 +24,8 @@ logging.basicConfig(
 )
 LOGGER = logging.getLogger(__name__)
 
+from pyrogram import errors
+
 
 class MessageEditor():
     def __init__(self, message, command):

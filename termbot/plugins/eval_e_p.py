@@ -6,6 +6,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import io
+import os
+import sys
+import traceback
+
 from pyrogram import (
     Client,
     Filters
@@ -15,14 +20,8 @@ from termbot import (
     AUTH_USERS,
     EVAL_CMD_TRIGGER,
     MAX_MESSAGE_LENGTH,
-    PROCESS_RUNNING,
-    TMP_DOWNLOAD_DIRECTORY
+    PROCESS_RUNNING
 )
-
-import io
-import os
-import sys
-import traceback
 
 
 @Client.on_message(Filters.command([EVAL_CMD_TRIGGER]) & Filters.chat(AUTH_USERS))
@@ -65,8 +64,7 @@ async def evaluation_cmd_t(client, message):
         await status_message.reply_document(
             document="eval.text",
             caption=cmd,
-            disable_notification=True,
-            reply_to_message_id=reply_to_id
+            disable_notification=True
         )
         os.remove("eval.text")
         await status_message.delete()

@@ -8,21 +8,17 @@
 
 # the logging things
 import logging
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
 
+from pyrogram import Client
 
 from termbot import (
-    APP_ID,
     API_HASH,
+    APP_ID,
     TG_BOT_TOKEN,
     TG_UPDATE_WORKERS_COUNT
 )
 
-import pyrogram
+
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 
@@ -30,7 +26,7 @@ if __name__ == "__main__":
     plugins = dict(
         root="termbot/plugins"
     )
-    app = pyrogram.Client(
+    app = Client(
         "TermBot",
         api_id=APP_ID,
         api_hash=API_HASH,

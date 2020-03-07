@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 # (c) Shrimadhav U K
 
+import os
+
 # the logging things
 import logging
 logging.basicConfig(
@@ -10,8 +12,6 @@ logging.basicConfig(
 )
 LOGGER = logging.getLogger(__name__)
 
-
-import os
 
 # the secret configuration specific things
 if bool(os.environ.get("ENV", False)):
