@@ -63,16 +63,10 @@
     "DELAY_BETWEEN_EDITS": {
       "description": "delay between edits, should be an integer",
       "required": false
-    },
-    "TYPE_CMD_TRIGGER": {
-      "description": "TYPE command trigger",
-      "required": false
     }
   },
   "addons": [],
   "buildpacks": [{
-    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
-  }, {
     "url": "heroku/python"
   }],
   "formation": {

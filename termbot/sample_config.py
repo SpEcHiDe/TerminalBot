@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 # Telegram Terminal Bot
 # CopyLeft AGPLv3 (C) 2020 The Authors
-
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import os
@@ -35,8 +34,6 @@ class Config(object):
     CHANGE_DIRECTORY_CTD = os.environ.get("CHANGE_DIRECTORY_CTD", ".")
     #
     DELAY_BETWEEN_EDITS = int(os.environ.get("DELAY_BETWEEN_EDITS", "2"))
-    # TYPE command trigger
-    TYPE_CMD_TRIGGER = os.environ.get("TYPE_CMD_TRIGGER", "type")
 
 
 class Production(Config):
