@@ -30,10 +30,11 @@ async def kill_cmd_t(client, message):
         return
     if hash_msg(message.reply_to_message) in aktifperintah:
         try:
-            aktifperintah[hash_msg(message.reply_to_message)].kill()
+            aktifperintah[hash_msg(message.reply_to_message)].process.kill()
         except Exception:
             await message.reply_text("Could not kill!", quote=True)
         else:
+            del aktifperintah[hash_msg(message.reply_to_message)]
             await message.reply_to_message.edit("Killed!")
     else:
         await message.reply_text(NO_CMD_RUNNING, quote=True)

@@ -34,6 +34,8 @@ class Config(object):
     CHANGE_DIRECTORY_CTD = os.environ.get("CHANGE_DIRECTORY_CTD", ".")
     #
     DELAY_BETWEEN_EDITS = int(os.environ.get("DELAY_BETWEEN_EDITS", "2"))
+    # TYPE command trigger
+    TYPE_CMD_TRIGGER = os.environ.get("TYPE_CMD_TRIGGER", "type")
 
 
 class Production(Config):

@@ -32,6 +32,7 @@ class MessageEditor():
         self.message = message
         self.command = command
         self.stdout = ""
+        self.stdin = ""
         self.stderr = ""
         self.rc = None
         self.redraws = 0
@@ -46,14 +47,23 @@ class MessageEditor():
         self.stderr = stderr
         await self.redraw()
 
+    async def update_stdin(self, stdin):
+        self.stdin = stdin
+        await self.redraw()
+
     async def redraw(self, skip_wait=False):
         text = "<b>Running command</b>: <code>{}<code>".format(self.command) + "\n"
         if self.rc is not None:
             text += "<b>process exited</b> with code <code>{}</code>".format(str(self.rc))
-        text += "\n\n" + "<b>STDOUT</b>:" + "\n"
-        text += "<code>" + self.stdout[max(len(self.stdout) - 2048, 0):] + "</code>"
-        text += "\n\n" + "<b>STDERR</n>:" + "\n"
-        text += "<code>" + self.stderr[max(len(self.stdout) - 1024, 0):] + "</code>"
+        if len(self.stdout) > 0:
+            text += "\n\n" + "<b>STDOUT</b>:" + "\n"
+            text += "<code>" + self.stdout[max(len(self.stdout) - 2048, 0):] + "</code>"
+        if len(self.stderr) > 0:
+            text += "\n\n" + "<b>STDERR</n>:" + "\n"
+            text += "<code>" + self.stderr[max(len(self.stderr) - 1024, 0):] + "</code>"
+        if len(self.stdin) > 0:
+            text += "\n\n" + "<b>STDiN</n>:" + "\n"
+            text += "<code>" + self.stdin[max(len(self.stdin) - 1024, 0):] + "</code>"
         try:
             await self.message.edit(text)
         except errors.MessageNotModified:

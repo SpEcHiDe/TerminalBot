@@ -7,9 +7,6 @@
 
 import asyncio
 
-# the logging things
-import logging
-
 from pyrogram import (
     Client,
     Filters
@@ -31,12 +28,6 @@ from termbot.helper_funcs.hash_msg import hash_msg
 from termbot.helper_funcs.read_stream import read_stream
 from termbot.helper_funcs.message_editor import MessageEditor
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-LOGGER = logging.getLogger(__name__)
-
 
 @Client.on_message(Filters.command([EXEC_CMD_TRIGGER]) & Filters.chat(AUTH_USERS))
 async def execution_cmd_t(client, message):
@@ -56,7 +47,7 @@ async def execution_cmd_t(client, message):
     editor = MessageEditor(status_message, cmd)
     editor.update_process(process)
 
-    aktifperintah[hash_msg(status_message)] = process
+    aktifperintah[hash_msg(status_message)] = editor
     await editor.redraw(True)
     await asyncio.gather(
         read_stream(

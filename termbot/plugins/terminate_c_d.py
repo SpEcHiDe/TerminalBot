@@ -30,10 +30,11 @@ async def terminate_cmd_t(client, message):
         return
     if hash_msg(message.reply_to_message) in aktifperintah:
         try:
-            aktifperintah[hash_msg(message.reply_to_message)].terminate()
+            aktifperintah[hash_msg(message.reply_to_message)].process.terminate()
         except Exception:
             await message.reply_text("Could not Terminate!", quote=True)
         else:
+            del aktifperintah[hash_msg(message.reply_to_message)]
             await message.reply_to_message.edit("Terminated!")
     else:
         await message.reply_text(NO_CMD_RUNNING, quote=True)
