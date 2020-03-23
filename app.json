@@ -33,7 +33,7 @@
       "value": ""
     },
     "AUTH_USERS": {
-      "description": "You can create a bot using @BotFather",
+      "description": "Space sperated IDs of users who are allowed to use the bot",
       "value": "7351948 -1001220993104"
     },
     "TG_UPDATE_WORKERS_COUNT": {
@@ -67,7 +67,7 @@
     "TYPE_CMD_TRIGGER": {
       "description": "TYPE command trigger",
       "required": false
-    },
+    }
   },
   "addons": [],
   "buildpacks": [{
