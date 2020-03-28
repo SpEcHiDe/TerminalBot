@@ -1,6 +1,8 @@
 # TerminalBot
 
-A Telegram Bot based on [Pyrogram](https://github.com/pyrogram/pyrogram)
+A Telegram Bot based on 
+  👉 [Pyrogram](https://github.com/pyrogram/pyrogram)
+  👉 [Telethon](https://github.com/LonamiWebs/Telethon)
 
 ## installing
 
@@ -14,6 +16,8 @@ Simply clone the repository and run the main file:
 ```sh
 git clone https://github.com/SpEcHiDe/TerminalBot.git
 cd TerminalBot
+git checkout Telethon 
+git checkout Pyrogram
 virtualenv -p /usr/bin/python3 venv
 . ./venv/bin/activate
 pip install -r requirements.txt
@@ -59,3 +63,4 @@ class Development(Config):
 ## Credits, and Thanks to
 
 * [Dan Tès](https://telegram.dog/haskell) for his [Pyrogram Library](https://github.com/pyrogram/pyrogram)
+* [Lonami](https://telegram.dog/Lonami) for his [Telethon Library](https://github.com/LonamiWebs/Telethon)
