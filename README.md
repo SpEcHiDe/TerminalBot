@@ -16,6 +16,7 @@ git clone https://github.com/SpEcHiDe/TerminalBot.git
 cd TerminalBot
 virtualenv -p /usr/bin/python3 venv
 . ./venv/bin/activate
+git checkout Pyrogram
 pip install -r requirements.txt
 # <Create config.py with variables as given below>
 python3 -m termbot
