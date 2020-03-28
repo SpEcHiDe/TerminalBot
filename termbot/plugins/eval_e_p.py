@@ -10,10 +10,10 @@ import os
 import sys
 import traceback
 
-from pyrogram import (
-    Client,
-    Filters
+from termbot import (
+    Client
 )
+from telethon import events
 
 from termbot import (
     AUTH_USERS,
@@ -23,11 +23,11 @@ from termbot import (
 )
 
 
-@Client.on_message(Filters.command([EVAL_CMD_TRIGGER]) & Filters.chat(AUTH_USERS))
-async def evaluation_cmd_t(client, message):
-    status_message = await message.reply_text(PROCESS_RUNNING, quote=True)
+@Client.on(events.NewMessage(chats=AUTH_USERS, pattern=EVAL_CMD_TRIGGER))
+async def evaluation_cmd_t(event):
+    status_message = await event.reply(PROCESS_RUNNING)
 
-    cmd = message.text.split(" ", maxsplit=1)[1]
+    cmd = event.message.message.split(" ", maxsplit=1)[1]
 
     old_stderr = sys.stderr
     old_stdout = sys.stdout
@@ -36,7 +36,7 @@ async def evaluation_cmd_t(client, message):
     stdout, stderr, exc = None, None, None
 
     try:
-        await aexec(cmd, client, message)
+        await aexec(cmd, event)
     except Exception:
         exc = traceback.format_exc()
 
@@ -60,10 +60,9 @@ async def evaluation_cmd_t(client, message):
     if len(final_output) > MAX_MESSAGE_LENGTH:
         with open("eval.text", "w+", encoding="utf8") as out_file:
             out_file.write(str(final_output))
-        await status_message.reply_document(
-            document="eval.text",
-            caption=cmd,
-            disable_notification=True
+        await status_message.reply(
+            file="eval.text",
+            text=cmd
         )
         os.remove("eval.text")
         await status_message.delete()
@@ -71,9 +70,9 @@ async def evaluation_cmd_t(client, message):
         await status_message.edit(final_output)
 
 
-async def aexec(code, client, message):
+async def aexec(code, event):
     exec(
-        f'async def __aexec(client, message): ' +
+        f'async def __aexec(event): ' +
         ''.join(f'\n {l}' for l in code.split('\n'))
     )
-    return await locals()['__aexec'](client, message)
+    return await locals()['__aexec'](event)

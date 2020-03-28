@@ -5,33 +5,41 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# the logging things
-import logging
 
-from pyrogram import Client
+# First we need the asyncio library
+import asyncio
+import importlib
 
 from termbot import (
     API_HASH,
     APP_ID,
+    Client,
+    LOGGER,
     TG_BOT_TOKEN,
     TG_UPDATE_WORKERS_COUNT
 )
 
+from termbot.plugins import ALL_MODULES
 
-logging.getLogger("pyrogram").setLevel(logging.WARNING)
-
-
-if __name__ == "__main__":
-    plugins = dict(
-        root="termbot/plugins"
-    )
-    app = Client(
-        "TermBot",
-        api_id=APP_ID,
-        api_hash=API_HASH,
-        plugins=plugins,
-        bot_token=TG_BOT_TOKEN,
-        workers=TG_UPDATE_WORKERS_COUNT
-    )
+async def main():
+    IMPORTED = {}
+    for module_name in ALL_MODULES:
+        imported_module = importlib.import_module("termbot.plugins." + module_name)
+        if not hasattr(imported_module, "__mod_name__"):
+            imported_module.__mod_name__ = imported_module.__name__
+        
+        if not imported_module.__mod_name__.lower() in IMPORTED:
+            IMPORTED[imported_module.__mod_name__.lower()] = imported_module
+        else:
+            raise Exception("Can't have two modules with the same name! Please change one")
+        
+    LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
     #
-    app.run()
+    await Client.run_until_disconnected()
+
+if __name__ == '__main__':
+    LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
+    # Then we need a loop to work with
+    loop = asyncio.get_event_loop()
+    # Then, we need to run the loop with a task
+    loop.run_until_complete(main())

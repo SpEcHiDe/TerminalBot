@@ -22,20 +22,22 @@ class Config(object):
     # set to store users who are authorized to use the bot
     AUTH_USERS = set(int(x) for x in os.environ.get("AUTH_USERS", "").split())
     #
+    # START command trigger
+    START_CMD_TRIGGER = os.environ.get("START_CMD_TRIGGER", "/start")
     # EVAL command trigger
-    EVAL_CMD_TRIGGER = os.environ.get("EVAL_CMD_TRIGGER", "eval")
+    EVAL_CMD_TRIGGER = os.environ.get("EVAL_CMD_TRIGGER", "/eval")
     # EXEC command trigger
-    EXEC_CMD_TRIGGER = os.environ.get("EXEC_CMD_TRIGGER", "exec")
+    EXEC_CMD_TRIGGER = os.environ.get("EXEC_CMD_TRIGGER", "/exec")
     # KILL command trigger
-    SIG_KILL_CMD_TRIGGER = os.environ.get("SIG_KILL_CMD_TRIGGER", "kill")
+    SIG_KILL_CMD_TRIGGER = os.environ.get("SIG_KILL_CMD_TRIGGER", "/kill")
     # TERMINATE command trigger
-    TERMINATE_CMD_TRIGGER = os.environ.get("TERMINATE_CMD_TRIGGER", "terminate")
+    TERMINATE_CMD_TRIGGER = os.environ.get("TERMINATE_CMD_TRIGGER", "/terminate")
     #
     CHANGE_DIRECTORY_CTD = os.environ.get("CHANGE_DIRECTORY_CTD", ".")
     #
     DELAY_BETWEEN_EDITS = int(os.environ.get("DELAY_BETWEEN_EDITS", "2"))
     # TYPE command trigger
-    TYPE_CMD_TRIGGER = os.environ.get("TYPE_CMD_TRIGGER", "type")
+    TYPE_CMD_TRIGGER = os.environ.get("TYPE_CMD_TRIGGER", "/type")
 
 
 class Production(Config):

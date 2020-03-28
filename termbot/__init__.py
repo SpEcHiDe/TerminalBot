@@ -37,6 +37,7 @@ SIG_KILL_CMD_TRIGGER = Config.SIG_KILL_CMD_TRIGGER
 TYPE_CMD_TRIGGER = Config.TYPE_CMD_TRIGGER
 CHANGE_DIRECTORY_CTD = Config.CHANGE_DIRECTORY_CTD
 DELAY_BETWEEN_EDITS = Config.DELAY_BETWEEN_EDITS
+START_CMD_TRIGGER = Config.START_CMD_TRIGGER
 
 HELP_STICKER = "CAADAgAD6AkAAowucAABsFGHedLEzeUWBA"
 PROCESS_RUNNING = "processing ..."
@@ -51,3 +52,10 @@ aktifperintah = {}
 inikerjasaatdirektori = os.path.abspath(
     CHANGE_DIRECTORY_CTD
 )
+
+from telethon import TelegramClient
+Client = TelegramClient(
+    "TermBot",
+    APP_ID, 
+    API_HASH
+).start(bot_token=TG_BOT_TOKEN)

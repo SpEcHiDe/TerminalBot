@@ -7,10 +7,10 @@
 
 import asyncio
 
-from pyrogram import (
-    Client,
-    Filters
+from termbot import (
+    Client
 )
+from telethon import events
 
 from termbot import (
     AUTH_USERS,
@@ -29,12 +29,12 @@ from termbot.helper_funcs.read_stream import read_stream
 from termbot.helper_funcs.message_editor import MessageEditor
 
 
-@Client.on_message(Filters.command([EXEC_CMD_TRIGGER]) & Filters.chat(AUTH_USERS))
-async def execution_cmd_t(client, message):
+@Client.on(events.NewMessage(chats=AUTH_USERS, pattern=EXEC_CMD_TRIGGER))
+async def execution_cmd_t(event):
     # send a message, use it to update the progress when required
-    status_message = await message.reply_text(PROCESS_RUNNING, quote=True)
+    status_message = await event.reply(PROCESS_RUNNING)
     # get the message from the triggered command
-    cmd = message.text.split(" ", maxsplit=1)[1]
+    cmd = event.message.message.split(" ", maxsplit=1)[1]
 
     process = await asyncio.create_subprocess_shell(
         cmd,

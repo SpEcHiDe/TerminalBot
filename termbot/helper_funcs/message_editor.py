@@ -24,7 +24,7 @@ logging.basicConfig(
 )
 LOGGER = logging.getLogger(__name__)
 
-from pyrogram import errors
+from telethon import errors
 
 
 class MessageEditor():
@@ -66,9 +66,9 @@ class MessageEditor():
             text += "<code>" + self.stdin[max(len(self.stdin) - 1024, 0):] + "</code>"
         try:
             await self.message.edit(text)
-        except errors.MessageNotModified:
+        except errors.rpcerrorlist.MessageNotModifiedError:
             pass
-        except errors.MessageTooLong as e:
+        except errors.rpcerrorlist.MessageTooLongError as e:
             LOGGER.error(e)
             LOGGER.error(text)
         # The message is never empty due to the template header

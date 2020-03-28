@@ -6,10 +6,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-from pyrogram import (
-    Client,
-    Filters
+from termbot import (
+    Client
 )
+from telethon import events
 
 from termbot import (
     AUTH_USERS,
@@ -23,18 +23,19 @@ from termbot import (
 from termbot.helper_funcs.hash_msg import hash_msg
 
 
-@Client.on_message(Filters.command([TERMINATE_CMD_TRIGGER]) & Filters.chat(AUTH_USERS))
-async def terminate_cmd_t(client, message):
-    if message.reply_to_message is None:
-        await message.reply_text(TERMINATE_HELP_GNIRTS, quote=True)
+@Client.on(events.NewMessage(chats=AUTH_USERS, pattern=TERMINATE_CMD_TRIGGER))
+async def terminate_cmd_t(event):
+    if event.reply_to_msg_id is None:
+        await event.reply(TERMINATE_HELP_GNIRTS)
         return
-    if hash_msg(message.reply_to_message) in aktifperintah:
+    reply_message = await event.get_reply_message()
+    if hash_msg(reply_message) in aktifperintah:
         try:
-            aktifperintah[hash_msg(message.reply_to_message)].process.terminate()
+            aktifperintah[hash_msg(reply_message)].process.terminate()
         except Exception:
-            await message.reply_text("Could not Terminate!", quote=True)
+            await event.reply("Could not Terminate!")
         else:
             del aktifperintah[hash_msg(message.reply_to_message)]
-            await message.reply_to_message.edit("Terminated!")
+            await reply_message.edit("Terminated!")
     else:
-        await message.reply_text(NO_CMD_RUNNING, quote=True)
+        await event.reply(NO_CMD_RUNNING)

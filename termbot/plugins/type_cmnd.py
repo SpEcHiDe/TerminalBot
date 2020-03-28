@@ -7,10 +7,10 @@
 
 import asyncio
 
-from pyrogram import (
-    Client,
-    Filters
+from termbot import (
+    Client
 )
+from telethon import events
 
 from termbot import (
     AUTH_USERS,
@@ -26,16 +26,17 @@ from termbot.helper_funcs.hash_msg import hash_msg
 from termbot.helper_funcs.read_stream import read_stream
 
 
-@Client.on_message(Filters.command([TYPE_CMD_TRIGGER]) & Filters.chat(AUTH_USERS))
-async def terminate_cmd_t(client, message):
-    if message.reply_to_message is None:
-        await message.reply_text(TYPE_HELP_GNIRTS, quote=True)
+@Client.on(events.NewMessage(chats=AUTH_USERS, pattern=TYPE_CMD_TRIGGER))
+async def type_cmd_t(event):
+    if event.reply_to_msg_id is None:
+        await event.reply(TYPE_HELP_GNIRTS)
         return
-    if hash_msg(message.reply_to_message) in aktifperintah:
+    reply_message = await event.get_reply_message()
+    if hash_msg(reply_message) in aktifperintah:
         # get the input from the triggered command
-        passed_ip = message.text.split(" ", maxsplit=1)[1]
+        passed_ip = event.message.message.split(" ", maxsplit=1)[1]
         #
-        current_message_editor = aktifperintah[hash_msg(message.reply_to_message)]
+        current_message_editor = aktifperintah[hash_msg(reply_message)]
         process = current_message_editor.process
         process.stdin.write(passed_ip.encode("UTF-8") + b"\r\n")
         # https://stackoverflow.com/a/163556/4723940
@@ -43,4 +44,4 @@ async def terminate_cmd_t(client, message):
         # await process.communicate()
         #
     else:
-        await message.reply_text(NO_CMD_RUNNING, quote=True)
+        await event.reply(NO_CMD_RUNNING)

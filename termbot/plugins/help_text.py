@@ -5,16 +5,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from pyrogram import Client, Filters
+from termbot import (
+    Client
+)
+from telethon import events
 
 from termbot import (
     AUTH_USERS,
-    HELP_STICKER
+    HELP_STICKER,
+    START_CMD_TRIGGER
 )
 
 
-@Client.on_message(~Filters.chat(chats=AUTH_USERS))
-async def not_auth_text(client, message):
-    await message.reply_sticker(HELP_STICKER, quote=True)
-    if message.chat.type != "private":
-        await message.chat.leave()
+@Client.on(events.NewMessage(pattern=START_CMD_TRIGGER))
+async def not_auth_text(event):
+    await event.reply(str(event.chat_id), file=HELP_STICKER)
