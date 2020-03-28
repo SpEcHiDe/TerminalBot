@@ -24,7 +24,7 @@ logging.basicConfig(
 )
 LOGGER = logging.getLogger(__name__)
 
-from telethon import errors
+from telegram.error import TelegramError
 
 
 class MessageEditor():
@@ -66,11 +66,10 @@ class MessageEditor():
             text += "<code>" + self.stdin[max(len(self.stdin) - 1024, 0):] + "</code>"
         try:
             await self.message.edit(text)
-        except errors.rpcerrorlist.MessageNotModifiedError:
-            pass
-        except errors.rpcerrorlist.MessageTooLongError as e:
+        except TelegramError as e:
             LOGGER.error(e)
             LOGGER.error(text)
+            pass    
         # The message is never empty due to the template header
 
     async def cmd_ended(self, rc):

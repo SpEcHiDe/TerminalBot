@@ -1,1 +1,1 @@
-worker: python3 -m termbot
+web: python3 -m termbot

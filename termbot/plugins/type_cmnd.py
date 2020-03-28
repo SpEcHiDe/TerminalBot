@@ -8,9 +8,8 @@
 import asyncio
 
 from termbot import (
-    Client
+    dispatcher
 )
-from telethon import events
 
 from termbot import (
     AUTH_USERS,
@@ -25,16 +24,21 @@ from termbot import (
 from termbot.helper_funcs.hash_msg import hash_msg
 from termbot.helper_funcs.read_stream import read_stream
 
+from telegram.ext import (
+    Filters, 
+    CommandHandler, 
+    run_async
+)
 
-@Client.on(events.NewMessage(chats=AUTH_USERS, pattern=TYPE_CMD_TRIGGER))
-async def type_cmd_t(event):
-    if event.reply_to_msg_id is None:
-        await event.reply(TYPE_HELP_GNIRTS)
+
+def type_cmd_t(update, context):
+    if update.message.reply_to_message is None:
+        update.message.reply_text(TYPE_HELP_GNIRTS)
         return
-    reply_message = await event.get_reply_message()
+    reply_message = update.message.reply_to_message
     if hash_msg(reply_message) in aktifperintah:
         # get the input from the triggered command
-        passed_ip = event.message.message.split(" ", maxsplit=1)[1]
+        passed_ip = update.message.text.split(" ", maxsplit=1)[1]
         #
         current_message_editor = aktifperintah[hash_msg(reply_message)]
         process = current_message_editor.process
@@ -44,4 +48,13 @@ async def type_cmd_t(event):
         # await process.communicate()
         #
     else:
-        await event.reply(NO_CMD_RUNNING)
+        update.message.reply_text(NO_CMD_RUNNING)
+
+
+dispatcher.add_handler(
+    CommandHandler(
+        TYPE_CMD_TRIGGER, 
+        type_cmd_t, 
+        filters=Filters.chat(AUTH_USERS)
+    )
+)

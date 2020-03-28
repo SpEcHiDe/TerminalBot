@@ -11,9 +11,8 @@ import sys
 import traceback
 
 from termbot import (
-    Client
+    dispatcher
 )
-from telethon import events
 
 from termbot import (
     AUTH_USERS,
@@ -22,12 +21,18 @@ from termbot import (
     PROCESS_RUNNING
 )
 
+from telegram.ext import (
+    Filters, 
+    CommandHandler, 
+    run_async
+)
 
-@Client.on(events.NewMessage(chats=AUTH_USERS, pattern=EVAL_CMD_TRIGGER))
-async def evaluation_cmd_t(event):
-    status_message = await event.reply(PROCESS_RUNNING)
 
-    cmd = event.message.message.split(" ", maxsplit=1)[1]
+@run_async
+def evaluation_cmd_t(update, context):
+    status_message = update.message.reply_text(PROCESS_RUNNING)
+
+    cmd = update.message.text.split(" ", maxsplit=1)[1]
 
     old_stderr = sys.stderr
     old_stdout = sys.stdout
@@ -36,7 +41,7 @@ async def evaluation_cmd_t(event):
     stdout, stderr, exc = None, None, None
 
     try:
-        await aexec(cmd, event)
+        aexec(cmd, update, context)
     except Exception:
         exc = traceback.format_exc()
 
@@ -60,19 +65,28 @@ async def evaluation_cmd_t(event):
     if len(final_output) > MAX_MESSAGE_LENGTH:
         with open("eval.text", "w+", encoding="utf8") as out_file:
             out_file.write(str(final_output))
-        await status_message.reply(
-            file="eval.text",
-            text=cmd
+        update.message.reply_document(
+            document=open("eval.text", "rb"),
+            caption=cmd
         )
         os.remove("eval.text")
-        await status_message.delete()
+        status_message.delete()
     else:
-        await status_message.edit(final_output)
+        status_message.edit(final_output)
 
 
-async def aexec(code, event):
+def aexec(code, update, context):
     exec(
-        f'async def __aexec(event): ' +
+        f'def __aexec(update, context): ' +
         ''.join(f'\n {l}' for l in code.split('\n'))
     )
-    return await locals()['__aexec'](event)
+    return locals()['__aexec'](update, context)
+
+
+dispatcher.add_handler(
+    CommandHandler(
+        EVAL_CMD_TRIGGER, 
+        evaluation_cmd_t, 
+        filters=Filters.chat(AUTH_USERS)
+    )
+)

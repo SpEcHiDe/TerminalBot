@@ -18,4 +18,4 @@
 
 
 def hash_msg(message):
-    return str(message.chat_id) + "/" + str(message.id)
+    return str(message.chat.id) + "/" + str(message.message_id)

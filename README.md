@@ -1,6 +1,6 @@
 # TerminalBot
 
-A Telegram Bot based on [Telethon](https://github.com/LonamiWebs/Telethon)
+A Telegram Bot based on [Python Telegram Bot](https://github.com/python-telegram-bot/python-telegram-bot)
 
 ## installing
 
@@ -16,7 +16,7 @@ git clone https://github.com/SpEcHiDe/TerminalBot.git
 cd TerminalBot
 virtualenv -p /usr/bin/python3 venv
 . ./venv/bin/activate
-git checkout Telethon
+git checkout PTB
 pip install -r requirements.txt
 # <Create config.py with variables as given below>
 python3 -m termbot
@@ -35,8 +35,6 @@ __The Bot should work by setting only these variables__
 from termbot.sample_config import Config
 
 class Development(Config):
-  APP_ID = 6
-  API_HASH = "eb06d4abfb49dc3eeb1aeb98ae0f581e"
   TG_BOT_TOKEN = "123456789:eb98ae0f7-Gm_6d4abfb49dc_9dc3eBaEBa"
   AUTH_USERS = [
     7351948
@@ -46,10 +44,7 @@ class Development(Config):
 
 ## [@SpEcHlDe](https://telegram.dog/ThankTelegram)
 
-- Only four of the configuration / environment variables are mandatory.
-- This is because of `pyrogram.errors.API_ID_PUBLISHED_FLOOD`
-    - `APP_ID`:   You can get this value from https://my.telegram.org
-    - `API_HASH`:   You can get this value from https://my.telegram.org
+- Only three of the configuration / environment variables are mandatory.
     - `TG_BOT_TOKEN`: You can create a bot using [@BotFather](https://telegram.dog/BotFather)
     - `AUTH_USERS`: space sperated IDs of users who are allowed to use the bot
     - `TG_UPDATE_WORKERS_COUNT`: Number of workers to use. `1` is the recommended amount see for yourself what works best!
@@ -59,4 +54,4 @@ class Development(Config):
 
 ## Credits, and Thanks to
 
-* [Lonami](https://telegram.dog/lonami) for his [Telethon Library](https://github.com/LonamiWebs/Telethon)
+* [PTB Authors](https://t.me/pythontelegrambotgroup) for their [Python Telegram Bot Library](https://github.com/python-telegram-bot/python-telegram-bot)

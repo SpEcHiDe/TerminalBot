@@ -6,9 +6,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from termbot import (
-    Client
+    dispatcher
 )
-from telethon import events
 
 from termbot import (
     AUTH_USERS,
@@ -16,7 +15,25 @@ from termbot import (
     START_CMD_TRIGGER
 )
 
+from telegram.ext import (
+    Filters, 
+    CommandHandler, 
+    run_async
+)
 
-@Client.on(events.NewMessage(pattern=START_CMD_TRIGGER))
-async def not_auth_text(event):
-    await event.reply(str(event.chat_id), file=HELP_STICKER)
+
+@run_async
+def not_auth_text(update, context):
+    update.message.reply_sticker(HELP_STICKER)
+    if update.message.chat.type != "private":
+        update.message.chat.leave()
+
+
+dispatcher.add_handler(
+    CommandHandler(
+        START_CMD_TRIGGER, 
+        not_auth_text, 
+        filters=~Filters.chat(AUTH_USERS)
+    )
+)
+

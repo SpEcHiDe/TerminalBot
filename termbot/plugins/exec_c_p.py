@@ -5,12 +5,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+# First we need the asyncio library
 import asyncio
 
 from termbot import (
-    Client
+    dispatcher
 )
-from telethon import events
 
 from termbot import (
     AUTH_USERS,
@@ -28,14 +28,14 @@ from termbot.helper_funcs.hash_msg import hash_msg
 from termbot.helper_funcs.read_stream import read_stream
 from termbot.helper_funcs.message_editor import MessageEditor
 
+from telegram.ext import (
+    Filters, 
+    CommandHandler, 
+    run_async
+)
 
-@Client.on(events.NewMessage(chats=AUTH_USERS, pattern=EXEC_CMD_TRIGGER))
-async def execution_cmd_t(event):
-    # send a message, use it to update the progress when required
-    status_message = await event.reply(PROCESS_RUNNING)
-    # get the message from the triggered command
-    cmd = event.message.message.split(" ", maxsplit=1)[1]
 
+async def exec_comnd_prc(cmd, status_message):        
     process = await asyncio.create_subprocess_shell(
         cmd,
         stdin=asyncio.subprocess.PIPE,
@@ -63,3 +63,27 @@ async def execution_cmd_t(event):
     )
     await editor.cmd_ended(await process.wait())
     del aktifperintah[hash_msg(status_message)]
+
+
+@run_async
+def execution_cmd_t(update, context):
+    # send a message, use it to update the progress when required
+    status_message = update.message.reply_text(PROCESS_RUNNING)
+    # get the message from the triggered command
+    cmd = update.message.text.split(" ", maxsplit=1)[1]
+
+    # Then we need a loop to work with
+    loop = asyncio.get_event_loop()
+
+    # Then, we need to run the loop with a task
+    loop.run_until_complete(exec_comnd_prc(cmd, status_message))
+
+
+dispatcher.add_handler(
+    CommandHandler(
+        EXEC_CMD_TRIGGER, 
+        execution_cmd_t, 
+        filters=Filters.chat(AUTH_USERS)
+    )
+)
+

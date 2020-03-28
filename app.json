@@ -20,12 +20,8 @@
       "description": "Setting this to ANYTHING will enable env mode",
       "value": "ANYTHING"
     },
-    "APP_ID": {
-      "description": "Get this value from https://my.telegram.org",
-      "value": ""
-    },
-    "API_HASH": {
-      "description": "Get this value from https://my.telegram.org",
+    "URL": {
+      "description": "your URL, in the format https://<applname>.herokuapp.com/ with the trailing /",
       "value": ""
     },
     "TG_BOT_TOKEN": {
@@ -74,7 +70,7 @@
     "url": "heroku/python"
   }],
   "formation": {
-    "worker": {
+    "web": {
       "quantity": 1,
       "size": "free"
     }

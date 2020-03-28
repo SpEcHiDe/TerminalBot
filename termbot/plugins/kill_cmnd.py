@@ -7,9 +7,8 @@
 
 
 from termbot import (
-    Client
+    dispatcher
 )
-from telethon import events
 
 from termbot import (
     AUTH_USERS,
@@ -22,20 +21,35 @@ from termbot import (
 
 from termbot.helper_funcs.hash_msg import hash_msg
 
+from telegram.ext import (
+    Filters, 
+    CommandHandler, 
+    run_async
+)
 
-@Client.on(events.NewMessage(chats=AUTH_USERS, pattern=SIG_KILL_CMD_TRIGGER))
-async def kill_cmd_t(event):
-    if event.reply_to_msg_id is None:
-        await event.reply(SIG_KILL_HELP_GNIRTS)
+
+@run_async
+def kill_cmd_t(update, context):
+    if update.message.reply_to_message is None:
+        update.message.reply_text(SIG_KILL_HELP_GNIRTS)
         return
-    reply_message = await event.get_reply_message()
+    reply_message = update.message.reply_to_message
     if hash_msg(reply_message) in aktifperintah:
         try:
             aktifperintah[hash_msg(reply_message)].process.kill()
         except Exception:
-            await event.reply("Could not kill!")
+            update.message.reply_text("Could not kill!")
         else:
             del aktifperintah[hash_msg(reply_message)]
-            await reply_message.edit("Killed!")
+            reply_message.edit("Killed!")
     else:
-        await event.reply(NO_CMD_RUNNING)
+        update.message.reply_text(NO_CMD_RUNNING)
+
+
+dispatcher.add_handler(
+    CommandHandler(
+        SIG_KILL_CMD_TRIGGER, 
+        kill_cmd_t, 
+        filters=Filters.chat(AUTH_USERS)
+    )
+)
