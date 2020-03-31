@@ -67,7 +67,7 @@
     "TYPE_CMD_TRIGGER": {
       "description": "TYPE command trigger",
       "required": false
-    },
+    }
   },
   "addons": [],
   "buildpacks": [{
