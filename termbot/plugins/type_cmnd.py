@@ -33,7 +33,10 @@ from telegram.ext import (
 
 def type_cmd_t(update, context):
     if update.message.reply_to_message is None:
-        update.message.reply_text(TYPE_HELP_GNIRTS)
+        update.message.reply_text(
+            TYPE_HELP_GNIRTS,
+            quote=True
+        )
         return
     reply_message = update.message.reply_to_message
     if hash_msg(reply_message) in aktifperintah:
@@ -48,7 +51,7 @@ def type_cmd_t(update, context):
         # await process.communicate()
         #
     else:
-        update.message.reply_text(NO_CMD_RUNNING)
+        update.message.reply_text(NO_CMD_RUNNING, quote=True)
 
 
 dispatcher.add_handler(

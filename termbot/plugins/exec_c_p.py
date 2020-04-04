@@ -7,6 +7,8 @@
 
 # First we need the asyncio library
 import asyncio
+import subprocess
+import signal
 
 from termbot import (
     dispatcher
@@ -67,23 +69,34 @@ async def exec_comnd_prc(cmd, status_message):
 
 @run_async
 def execution_cmd_t(update, context):
+    print(update)
     # send a message, use it to update the progress when required
-    status_message = update.message.reply_text(PROCESS_RUNNING)
+    status_message = update.message.reply_text(
+        PROCESS_RUNNING,
+        quote=True
+    )
     # get the message from the triggered command
     cmd = update.message.text.split(" ", maxsplit=1)[1]
 
     # Then we need a loop to work with
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
+    # https://stackoverflow.com/a/46750562/4723940
+
+    tasks = [loop.create_task(exec_comnd_prc(cmd, status_message))]
+    # https://stackoverflow.com/a/43691639/4723940
 
     # Then, we need to run the loop with a task
-    loop.run_until_complete(exec_comnd_prc(cmd, status_message))
+    wait_tasks = asyncio.wait(tasks) 
+    loop.run_until_complete(wait_tasks)
+
+    # finally, close the event loop
+    loop.close()
 
 
-dispatcher.add_handler(
-    CommandHandler(
-        EXEC_CMD_TRIGGER, 
-        execution_cmd_t, 
-        filters=Filters.chat(AUTH_USERS)
-    )
-)
-
+# dispatcher.add_handler(
+#     CommandHandler(
+#         EXEC_CMD_TRIGGER, 
+#         execution_cmd_t, 
+#         filters=Filters.chat(AUTH_USERS)
+#     )
+# )

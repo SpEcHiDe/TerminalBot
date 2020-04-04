@@ -30,7 +30,10 @@ from telegram.ext import (
 
 @run_async
 def evaluation_cmd_t(update, context):
-    status_message = update.message.reply_text(PROCESS_RUNNING)
+    status_message = update.message.reply_text(
+        PROCESS_RUNNING,
+        quote=True
+    )
 
     cmd = update.message.text.split(" ", maxsplit=1)[1]
 
@@ -65,14 +68,14 @@ def evaluation_cmd_t(update, context):
     if len(final_output) > MAX_MESSAGE_LENGTH:
         with open("eval.text", "w+", encoding="utf8") as out_file:
             out_file.write(str(final_output))
-        update.message.reply_document(
+        status_message.reply_document(
             document=open("eval.text", "rb"),
             caption=cmd
         )
         os.remove("eval.text")
         status_message.delete()
     else:
-        status_message.edit(final_output)
+        status_message.edit_text(final_output)
 
 
 def aexec(code, update, context):

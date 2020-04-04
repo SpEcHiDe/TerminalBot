@@ -24,7 +24,10 @@ from telegram.ext import (
 
 @run_async
 def not_auth_text(update, context):
-    update.message.reply_sticker(HELP_STICKER)
+    update.message.reply_sticker(
+        HELP_STICKER,
+        quote=True
+    )
     if update.message.chat.type != "private":
         update.message.chat.leave()
 

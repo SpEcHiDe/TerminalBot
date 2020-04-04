@@ -30,19 +30,22 @@ from telegram.ext import (
 
 def terminate_cmd_t(update, context):
     if update.message.reply_to_message is None:
-        update.message.reply_text(TERMINATE_HELP_GNIRTS)
+        update.message.reply_text(
+            TERMINATE_HELP_GNIRTS,
+            quote=True
+        )
         return
     reply_message = update.message.reply_to_message
     if hash_msg(reply_message) in aktifperintah:
         try:
             aktifperintah[hash_msg(reply_message)].process.terminate()
         except Exception:
-            update.message.reply_text("Could not Terminate!")
+            update.message.reply_text("Could not Terminate!", quote=True)
         else:
             del aktifperintah[hash_msg(message.reply_to_message)]
-            reply_message.edit("Terminated!")
+            reply_message.edit_text("Terminated!")
     else:
-        update.message.reply_text(NO_CMD_RUNNING)
+        update.message.reply_text(NO_CMD_RUNNING, quote=True)
 
 
 dispatcher.add_handler(

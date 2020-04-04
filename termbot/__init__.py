@@ -56,5 +56,13 @@ inikerjasaatdirektori = os.path.abspath(
     CHANGE_DIRECTORY_CTD
 )
 
-updater = tg.Updater(TG_BOT_TOKEN, workers=TG_UPDATE_WORKERS_COUNT)
+# Create the Updater and pass it your bot's token.
+# Make sure to set use_context=True to use the new context based callbacks
+# Post version 12 this will no longer be necessary
+updater = tg.Updater(
+    TG_BOT_TOKEN,
+    use_context=True,
+    workers=TG_UPDATE_WORKERS_COUNT
+)
+# Get the dispatcher to register handlers
 dispatcher = updater.dispatcher

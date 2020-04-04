@@ -31,19 +31,22 @@ from telegram.ext import (
 @run_async
 def kill_cmd_t(update, context):
     if update.message.reply_to_message is None:
-        update.message.reply_text(SIG_KILL_HELP_GNIRTS)
+        update.message.reply_text(
+            SIG_KILL_HELP_GNIRTS,
+            quote=True
+        )
         return
     reply_message = update.message.reply_to_message
     if hash_msg(reply_message) in aktifperintah:
         try:
             aktifperintah[hash_msg(reply_message)].process.kill()
         except Exception:
-            update.message.reply_text("Could not kill!")
+            update.message.reply_text("Could not kill!", quote=True)
         else:
             del aktifperintah[hash_msg(reply_message)]
-            reply_message.edit("Killed!")
+            reply_message.edit_text("Killed!")
     else:
-        update.message.reply_text(NO_CMD_RUNNING)
+        update.message.reply_text(NO_CMD_RUNNING, quote=True)
 
 
 dispatcher.add_handler(
