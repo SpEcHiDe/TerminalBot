@@ -65,7 +65,7 @@ class MessageEditor():
             text += "\n\n" + "<b>STDiN</n>:" + "\n"
             text += "<code>" + self.stdin[max(len(self.stdin) - 1024, 0):] + "</code>"
         try:
-            await self.message.edit(text)
+            await self.message.edit(text, parse_mode='html')
         except errors.rpcerrorlist.MessageNotModifiedError:
             pass
         except errors.rpcerrorlist.MessageTooLongError as e:
