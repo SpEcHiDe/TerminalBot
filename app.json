@@ -1,0 +1,80 @@
+{
+    "name": "TerminalBot",
+    "description": "A GNU/Linux Terminal inside @Telegram",
+    "keywords": [
+      "telegram",
+      "best",
+      "indian",
+      "ffmpeg",
+      "bot",
+      "3",
+      "plugin",
+      "modular",
+      "productivity",
+      "terminal",
+      "gnu",
+      "AGPL"
+    ],
+    "repository": "https://github.com/SpEcHiDe/TerminalBot",
+    "success_url": "https://telegram.dog/SpEcHlDe",
+    "website": "https://github.com/SpEcHiDe/TerminalBot",
+    "env": {
+      "ENV": {
+        "description": "Setting this to ANYTHING will enable env mode",
+        "value": "ANYTHING"
+      },
+      "APP_ID": {
+        "description": "Get this value from https://my.telegram.org"
+      },
+      "API_HASH": {
+        "description": "Get this value from https://my.telegram.org"
+      },
+      "TG_BOT_TOKEN": {
+        "description": "You can create a bot using @BotFather"
+      },
+      "AUTH_USERS": {
+        "description": "Space sperated IDs of users who are allowed to use the bot",
+        "value": "7351948 -1001220993104"
+      },
+      "TG_UPDATE_WORKERS_COUNT": {
+        "description": "Number of workers to use. `1` is the recommended amount see for yourself what works best!",
+        "required": false
+      },
+      "TMP_DOWNLOAD_DIRECTORY": {
+        "description": "This is required for the plugins involving the file system.",
+        "required": false
+      },
+      "EVAL_CMD_TRIGGER": {
+        "description": "EVAL command trigger",
+        "required": false
+      },
+      "EXEC_CMD_TRIGGER": {
+        "description": "EXEC command trigger",
+        "required": false
+      },
+      "SIG_KILL_CMD_TRIGGER": {
+        "description": "KILL command trigger",
+        "required": false
+      },
+      "TERMINATE_CMD_TRIGGER": {
+        "description": "TERMINATE command trigger",
+        "required": false
+      },
+      "DELAY_BETWEEN_EDITS": {
+        "description": "delay between edits, should be an integer",
+        "required": false
+      },
+      "TYPE_CMD_TRIGGER": {
+        "description": "TYPE command trigger",
+        "required": false
+      }
+    },
+    "stack": "container",
+    "formation": {
+      "worker": {
+        "quantity": 1,
+        "size": "free"
+      }
+    }
+  }
+  
