@@ -69,6 +69,7 @@
       "required": false
     }
   },
+  "stack": "heroku-18",
   "addons": [],
   "buildpacks": [{
     "url": "heroku/python"
