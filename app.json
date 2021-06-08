@@ -1,20 +1,21 @@
 {
-  "name": "FFMpegBot",
-  "description": "A FFMpeg Wrapper inside @Telegram",
+  "name": "Terminal Bot",
+  "description": "A Linux Environment inside @Telegram",
   "keywords": [
     "telegram",
     "best",
     "indian",
-    "ffmpeg",
+    "Spechide",
+    "TerminalBot",
     "bot",
     "3",
     "plugin",
     "modular",
     "productivity"
   ],
-  "repository": "https://github.com/SpEcHiDe/FFMpegBot",
+  "repository": "https://github.com/SpEcHiDe/TerminalBot",
   "success_url": "https://telegram.dog/SpEcHlDe",
-  "website": "https://github.com/SpEcHiDe/FFMpegBot",
+  "website": "https://github.com/SpEcHiDe/TerminalBot",
   "env": {
     "ENV": {
       "description": "Setting this to ANYTHING will enable env mode",
