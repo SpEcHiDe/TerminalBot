@@ -8,7 +8,7 @@
 
 from pyrogram import (
     Client,
-    Filters
+    filters
 )
 
 from termbot import (
@@ -23,7 +23,7 @@ from termbot import (
 from termbot.helper_funcs.hash_msg import hash_msg
 
 
-@Client.on_message(Filters.command([SIG_KILL_CMD_TRIGGER]) & Filters.chat(AUTH_USERS))
+@Client.on_message(filters.command([SIG_KILL_CMD_TRIGGER]) & filters.chat(AUTH_USERS))
 async def kill_cmd_t(client, message):
     if message.reply_to_message is None:
         await message.reply_text(SIG_KILL_HELP_GNIRTS, quote=True)

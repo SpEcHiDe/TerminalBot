@@ -9,7 +9,7 @@ import asyncio
 
 from pyrogram import (
     Client,
-    Filters
+    filters
 )
 
 from termbot import (
@@ -29,7 +29,7 @@ from termbot.helper_funcs.read_stream import read_stream
 from termbot.helper_funcs.message_editor import MessageEditor
 
 
-@Client.on_message(Filters.command([EXEC_CMD_TRIGGER]) & Filters.chat(AUTH_USERS))
+@Client.on_message(filters.command([EXEC_CMD_TRIGGER]) & filters.chat(AUTH_USERS))
 async def execution_cmd_t(client, message):
     # send a message, use it to update the progress when required
     status_message = await message.reply_text(PROCESS_RUNNING, quote=True)
