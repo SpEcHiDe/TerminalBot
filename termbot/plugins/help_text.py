@@ -5,7 +5,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
 from termbot import (
     AUTH_USERS,
@@ -13,7 +13,7 @@ from termbot import (
 )
 
 
-@Client.on_message(~Filters.chat(chats=AUTH_USERS))
+@Client.on_message(~filters.chat(AUTH_USERS))
 async def not_auth_text(client, message):
     await message.reply_sticker(HELP_STICKER, quote=True)
     if message.chat.type != "private":

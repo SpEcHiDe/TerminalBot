@@ -1,2 +1,2 @@
 tgcrypto
-pyrogram==1.0.7
+pyrogram
