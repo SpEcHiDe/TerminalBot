@@ -16,28 +16,35 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import re
 import asyncio
 
 
 async def read_stream(func, stream, delay):
-    last_task = None
-    data = b""
-    while True:
-        dat = (await stream.read(1))
-        if not dat:
-            # EOF
-            if last_task:
-                # Send all pending data
-                last_task.cancel()
-                await func(data.decode("UTF-8"))
-                # If there is no last task there is inherently no data, so theres no point sending a blank string
+    text = ''
+    pattern = re.compile(r'.+\r(?=\w)|\r')
+
+    while not stream._eof:
+        await stream._wait_for_data('read_stream')
+
+        try:
+            chunk = bytes(stream._buffer).decode()
+        except UnicodeDecodeError:
+            continue
+
+        stream._buffer.clear()
+        text = pattern.sub('', text + chunk)
+        await func(text)
+
+        if len(text) > 2048:
+            text = text[-2048:]
+        if stream._eof:
             break
-        data += dat
-        if last_task:
-            last_task.cancel()
-        last_task = asyncio.ensure_future(sleep_for_task(func, data, delay))
 
+        await asyncio.sleep(delay)
 
-async def sleep_for_task(func, data, delay):
-    await asyncio.sleep(delay)
-    await func(data.decode("utf-8"))
+    if len(stream._buffer) > 0:
+        chunk = bytes(stream._buffer).decode()
+        stream._buffer.clear()
+        text = pattern.sub('', text + chunk)
+        await func(text)
